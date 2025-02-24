@@ -1,5 +1,5 @@
 -- ==================================================
--- Вставка данных в таблицу branches (Отделения)
+-- Вставка данных в таблицу branches
 -- ==================================================
 INSERT INTO branches (name, address, phone_number) VALUES
 ('Main Branch', '123 Main St, New York', '+1 555-0101'),
@@ -9,7 +9,7 @@ INSERT INTO branches (name, address, phone_number) VALUES
 ('North Branch', '202 North St, Boston', '+1 555-0505');
 
 -- ==================================================
--- Вставка данных в таблицу clients (Клиенты)
+-- Вставка данных в таблицу clients 
 -- ==================================================
 INSERT INTO clients (last_name, first_name, middle_name, residential_address, email, phone_number, client_type) VALUES
 ('Smith', 'John', 'A.', '12 Park Ave, NY', 'john.smith@email.com', '+1 555-1111', 'individual'),
@@ -24,33 +24,34 @@ INSERT INTO clients (last_name, first_name, middle_name, residential_address, em
 ('Thomas Group', NULL, NULL, '190 Lake St, Boston', 'info@thomasgroup.com', '+1 555-0000', 'legal_entity');
 
 -- ==================================================
--- Вставка данных в таблицу account_types (Виды счетов)
+-- Вставка данных в таблицу account_types
 -- ==================================================
-INSERT INTO account_types (type_name, debit_amount_limit, credit_amount_limit, maximum_credit, interest_rate, interest_payout_interval, interest_payout_date, interest_payout_method) VALUES
-('savings', 5000.00, NULL, NULL, 3.5, 'monthly', '2025-01-01', 'same_account'),
-('credit', NULL, 10000.00, 5000.00, 7.0, 'yearly', '2025-01-01', 'other_account'),
-('checking', 10000.00, NULL, NULL, 0.0, NULL, NULL, NULL),
-('savings', 2000.00, NULL, NULL, 4.0, 'quarterly', '2025-01-01', 'same_account'),
-('credit', NULL, 15000.00, 7000.00, 6.5, 'daily', '2025-01-01', 'other_account');
+INSERT INTO account_types (type_name, name, can_deposit, can_withdraw, debit_amount_limit, credit_amount_limit, maximum_credit, interest_rate, interest_payout_interval, interest_payout_method) 
+VALUES
+('savings', 'Сберегательный "Стандарт"', true, true, 5000.00, NULL, NULL, 3.5, 'monthly', 'same_account'),
+('credit', 'Кредитный "Базовый"', false, true, NULL, 10000.00, 5000.00, 7.0, 'yearly', 'other_account'),
+('checking', 'Расчетный счет', true, true, 10000.00, NULL, NULL, 0.0, NULL, NULL),
+('savings', 'Сберегательный "Премиум"', true, true, 2000.00, NULL, NULL, 4.0, 'quarterly', 'same_account'),
+('credit', 'Кредитная линия "Премиум"', true, false, NULL, 15000.00, 7000.00, 6.5, 'daily', 'other_account');
 
 -- ==================================================
--- Вставка данных в таблицу accounts (Счета клиентов)
+-- Вставка данных в таблицу accounts
 -- ==================================================
-INSERT INTO accounts (account_number, balance, status, open_date, close_date, client_id, account_type_id, branch_id) VALUES
-('ACC1001', 1500.00, 'open', '2023-01-15', NULL, 1, 1, 1),
-('ACC1002', 7000.00, 'open', '2023-03-10', NULL, 1, 3, 2),
-('ACC2001', 2500.00, 'open', '2023-02-20', NULL, 2, 2, 3),
-('ACC3001', 3200.00, 'open', '2023-04-05', NULL, 3, 1, 1),
-('ACC4001', 4000.00, 'open', '2023-05-25', NULL, 4, 4, 4),
-('ACC5001', 500.00, 'open', '2023-06-15', NULL, 5, 5, 5),
-('ACC6001', 9000.00, 'open', '2023-07-10', NULL, 6, 1, 1),
-('ACC7001', 12000.00, 'open', '2023-08-20', NULL, 7, 2, 2),
-('ACC8001', 1500.00, 'open', '2023-09-10', NULL, 8, 3, 3),
-('ACC9001', 8500.00, 'open', '2023-10-30', NULL, 9, 4, 4),
-('ACC10001', 6200.00, 'open', '2023-11-15', NULL, 10, 5, 5);
+INSERT INTO accounts (account_number, balance, status, open_date, close_date, client_id, account_type_id, branch_id, interest_payout_date) VALUES
+('ACC1001', 1500.00, 'open', '2023-01-15', NULL, 1, 1, 1, '2025-01-01'),
+('ACC1002', 7000.00, 'open', '2023-03-10', NULL, 1, 3, 2, NULL),
+('ACC2001', 2500.00, 'open', '2023-02-20', NULL, 2, 2, 3, '2025-01-01'),
+('ACC3001', 3200.00, 'open', '2023-04-05', NULL, 3, 1, 1, '2025-01-01'),
+('ACC4001', 4000.00, 'open', '2023-05-25', NULL, 4, 4, 4, '2025-01-01'),
+('ACC5001', 500.00, 'open', '2023-06-15', NULL, 5, 5, 5, '2025-01-01'),
+('ACC6001', 9000.00, 'open', '2023-07-10', NULL, 6, 1, 1, '2025-01-01'),
+('ACC7001', 12000.00, 'open', '2023-08-20', NULL, 7, 2, 2, '2025-01-01'),
+('ACC8001', 1500.00, 'open', '2023-09-10', NULL, 8, 3, 3, NULL),
+('ACC9001', 8500.00, 'open', '2023-10-30', NULL, 9, 4, 4, '2025-01-01'),
+('ACC10001', 6200.00, 'open', '2023-11-15', NULL, 10, 5, 5, '2025-01-01');
 
 -- ==================================================
--- Вставка данных в таблицу account_operations (Операции по счетам)
+-- Вставка данных в таблицу account_operations
 -- ==================================================
 INSERT INTO account_operations (operation_type, operation_amount, operation_date, comment, executed_by, sender_account_id, receiver_account_id) VALUES
 ('deposit', 1000.00, '2024-01-01 09:00:00', 'Cash deposit', 'employee', NULL, 1),
@@ -63,4 +64,3 @@ INSERT INTO account_operations (operation_type, operation_amount, operation_date
 ('withdrawal', 700.00, '2024-01-09 18:55:00', 'Grocery shopping', 'system', 8, NULL),
 ('transfer', 950.00, '2024-01-10 21:30:00', 'Utility bill', 'employee', 9, 10),
 ('deposit', 800.00, '2024-01-11 08:05:00', 'Bonus payment', 'system', NULL, 5);
-
